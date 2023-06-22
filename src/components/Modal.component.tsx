@@ -1,9 +1,22 @@
-import { Pokemon, TypeColor } from '@/interfaces/pokemon.interface'
+import { Pokemon, StatsData, TypeColor } from '@/interfaces/pokemon.interface'
 import Image from 'next/image'
 import React from 'react'
+import Chart from '@/components/Chart.component'
 
 export default function Modal({modal, setModal}: { modal: { item: Pokemon | null, isOpen: boolean }, setModal: any }) {
   const pokemonNumber = modal.item?.id.toString().padStart(4, '0')
+  const [stats, setStats] = React.useState<StatsData[]>([])
+
+  React.useEffect(() => {
+    if (modal.item) {
+      const stats = modal.item.stats.map(stat => ({
+        name: stat.stat.name,
+        value: stat.base_stat,
+      }))
+      setStats(stats)
+    }
+  }, [modal])
+
   return (
     modal.isOpen ? (
         <>
@@ -37,7 +50,7 @@ export default function Modal({modal, setModal}: { modal: { item: Pokemon | null
                     <div className='bg-cyan-500 my-5 grid grid-cols-2 gap-x-6 gap-y-6 rounded-lg p-6'>
                       <div>
                         <p className='text-white'>Altura</p>
-                        <p className='text-black'>{modal.item!.height / 10} cm</p>
+                        <p className='text-black'>{modal.item!.height / 10} m</p>
                       </div>
                       <div>
                         <p className='text-white'>Peso</p>
@@ -62,6 +75,10 @@ export default function Modal({modal, setModal}: { modal: { item: Pokemon | null
                           return <li key={i} className="text-white capitalize px-3 py-1 mr-2 my-2 rounded-lg" style={{backgroundColor: TypeColor[type.name]}}>{type.name}</li>
                         })}
                       </ul>
+                    </div>
+                    <div className='bg-gray-400/40 mt-5 rounded-lg p-5'>
+                      <p className='text-black mb-5'>Puntos Base</p>
+                      <Chart chartData={stats} color={TypeColor[modal.item!.types && modal.item!.types[0].type.name]} />
                     </div>
                   </div>
                 </div>

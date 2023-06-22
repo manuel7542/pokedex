@@ -11,7 +11,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const pokemon = data.results[i];
       pokemonList.push(await fetchPokemon(pokemon))
     }
-    console.log(pokemonList)
     res.status(200).json({
       data: pokemonList,
       count: data.count

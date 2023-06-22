@@ -293,3 +293,8 @@ export interface Variety {
   is_default: boolean;
   pokemon: Color;
 }
+
+export interface StatsData {
+  name: string;
+  value: number;
+}

@@ -8,7 +8,6 @@ export default function Pagination({limit, total, page , setPage}: {limit: numbe
   React.useEffect(() => {
     if (total > 0) {
       setMaxPage(Math.ceil(total / limit));
-      console.log(Math.ceil(total / limit));
     }
   }, [limit, total])
 
