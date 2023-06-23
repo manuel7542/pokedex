@@ -1,0 +1,15 @@
+[
+  {
+    "id": "3d82ca25-7f25-47fa-befa-f17b5fff5cbd",
+    "name": "Pedro Pérez",
+    "email": "pedro.perez@gmail.com",
+    "job": "Frontend Developer",
+    "company": "TechSolutions",
+    "address": "Avenida Tecnológica 123, Ciudad Futura, 12345, Innovacity",
+    "school": "Universidad Innovatech",
+    "about": "Como desarrollador frontend, me especializo en React, Next.js y Tailwind CSS. Mi objetivo es crear interfaces de usuario atractivas y funcionales utilizando estas tecnologías. Soy meticuloso en mi trabajo, asegurándome de que el código que escribo sea limpio y eficiente. Además, estoy constantemente aprendiendo y manteniéndome actualizado con las últimas tendencias en desarrollo frontend para ofrecer resultados excepcionales.",
+    "avatar": "https://picsum.photos/800/800",
+    "banner": "https://picsum.photos/1920/600",
+    "password": "$2a$12$pTDzfn1QKCsKFYFCk/n1eeSM5Yur9C6xjklYq2ivSbK46sE9H8.lO"
+  }
+]

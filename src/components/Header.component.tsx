@@ -12,30 +12,33 @@ import {
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
 import Image from 'next/image'
+import Link from 'next/link'
+import { useSession, signOut } from 'next-auth/react'
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Example() {
+export default function Header() {
+  const { data: session, status,  } = useSession()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
   return (
     <header className="bg-white">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
+          <Link href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
             <Image
+              priority
               className="h-8 w-auto"
               src="/logo.png"
               alt=""
               width={250}
               height={250}
             />
-          </a>
+          </Link>
         </div>
-        <div className="flex lg:hidden">
+        <div className="flex ">
           <button
             type="button"
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
@@ -46,26 +49,33 @@ export default function Example() {
           </button>
         </div>
         
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Log in <span aria-hidden="true">&rarr;</span>
-          </a>
-        </div>
+        {/* <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+          {status !== 'authenticated' ? (
+            <Link href="/auth/login" className="text-sm font-semibold leading-6 text-gray-900">
+              Log in <span aria-hidden="true">&rarr;</span>
+            </Link>
+          ) : (
+            <Link href="/me" className="text-sm font-semibold leading-6 text-gray-900">
+              { session.user?.name }
+            </Link>
+          )}
+        </div> */}
       </nav>
-      <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
-        <div className="fixed inset-0 z-10" />
+      <Dialog as="div" className="" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
+        <div className="fixed inset-0 z-10 bg-gray-700/30" />
         <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
-            <a href="#" className="-m-1.5 p-1.5">
+            <Link href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
               <Image
+                priority
                 className="h-8 w-auto"
                 src="/logo.png"
                 alt=""
                 width={250}
                 height={250}
               />
-            </a>
+            </Link>
             <button
               type="button"
               className="-m-2.5 rounded-md p-2.5 text-gray-700"
@@ -76,14 +86,37 @@ export default function Example() {
             </button>
           </div>
           <div className="mt-6 flow-root">
+            {status === 'authenticated' ? (
+              <div className='flex flex-col items-center justify-center my-5'>
+                <Image
+                  className="h-36 w-36 rounded-full ring-2 ring-white"
+                  src={(session.user as any).avatar}
+                  alt=""
+                  width={250}
+                  height={250}
+                />
+                <p className='text-center font-semibold text-xl mt-5 text-black'>{ session.user?.name }</p>
+              </div>
+            ) : null}
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="py-6">
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Log in
-                </a>
+                {status !== 'authenticated' ? (
+                  <Link
+                    href="/auth/login"
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >
+                    Log in
+                  </Link>
+                ) : (
+                  <>
+                    <Link href="/me" className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+                      Perfil
+                    </Link>
+                    <Link onClick={() => signOut()} href='#' className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+                      Cerrar sesión
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </div>

@@ -8,6 +8,7 @@ import Pagination from '@/components/Pagination.component'
 import Modal from '@/components/Modal.component'
 import { registerables, Chart } from "chart.js";
 import Select from '@/components/Select.component'
+import Layout from "../app/layout"
 Chart.register(...registerables);
 export interface ListItems {
   id: number,
@@ -68,7 +69,7 @@ export default function Home() {
   }, [page, limit])
 
   return (
-    <main>
+    <Layout>
       <div className={`fixed top-0 left-0 right-0 bottom-0 w-full h-screen z-50 overflow-hidden bg-gray-700 opacity-75 ${loading ? 'flex' : 'hidden'} flex-col items-center justify-center`}>
         <div className="animate-spin loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-24 w-24 mb-4"></div>
       </div>
@@ -89,19 +90,20 @@ export default function Home() {
               </div>
             ) : !loading ? (
               <div className="flex justify-center items-center flex-col my-10">
-                <Image src="/no_results.png" width={200} height={200} alt="No se encontraron registros" />
+                <Image priority src="/no_results.png" width={200} height={200} alt="No se encontraron registros" />
                 <p className='mt-5 text-gray-500 text-xl font-regular'>No se encontraron registros</p>
               </div>
             ) : 
             (
               <div className="flex justify-center items-center flex-col my-10">
-                <Image className='animate-pulse' src="/loading.svg" width={200} height={200} alt="Cargando..." />
+                <Image priority className='animate-pulse' src="/loading.svg" width={200} height={200} alt="Cargando..." />
+                <p className='text-gray-500 text-xl font-regular'>Cargando...</p>
               </div>
             )}
             <Pagination page={page} total={count} setPage={setPage} limit={limit.id} />
           </div>
         </div>
       </div>
-    </main>
+    </Layout>
   )
 }

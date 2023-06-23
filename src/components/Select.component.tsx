@@ -1,7 +1,7 @@
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-import { ListItems } from '@/app/page'
+import { ListItems } from '@/pages'
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
