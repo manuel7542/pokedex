@@ -15,15 +15,17 @@ export default function Pagination({limit, total, page , setPage}: {limit: numbe
   const pageInactive = 'relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 '
 
   return (
-    <div className="flex items-center justify-between border-gray-200 px-4 py-3 sm:px-0">
+    <div id='pagination' className="flex items-center justify-between border-gray-200 px-4 py-3 sm:px-0">
       <div className="flex flex-1 justify-between sm:hidden">
         <button
+          id='previous-page-sm'
           disabled={page === minPage} onClick={() => setPage(page - 1)}
           className={`relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 ${page === minPage ? 'cursor-not-allowed' : 'hover:bg-gray-50'} focus:z-20 focus:outline-offset-0`}
         >
           Previous
         </button>
         <button
+          id='next-page-sm'
           disabled={page === maxPage} onClick={() => setPage(page + 1)}
           className={`relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 ${page === maxPage ? 'cursor-not-allowed' : 'hover:bg-gray-50'} focus:z-20 focus:outline-offset-0`}
         >
@@ -47,6 +49,7 @@ export default function Pagination({limit, total, page , setPage}: {limit: numbe
               <ChevronDoubleLeftIcon className="h-5 w-5" aria-hidden="true" />
             </button>
             <button
+              id='previous-page'
               disabled={page === minPage} onClick={() => setPage(page - 1)}
               className={`relative inline-flex items-center  px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 ${page === minPage ? 'cursor-not-allowed' : 'hover:bg-gray-50'} focus:z-20 focus:outline-offset-0`}
             >
@@ -69,6 +72,7 @@ export default function Pagination({limit, total, page , setPage}: {limit: numbe
               </>
             )}
             <button
+              id='next-page'
               disabled={page === maxPage} onClick={() => setPage(page + 1)}
               className={`relative inline-flex items-center px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 ${page === maxPage ? 'cursor-not-allowed' : 'hover:bg-gray-50'} focus:z-20 focus:outline-offset-0`}
             >

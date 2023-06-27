@@ -21,7 +21,7 @@ export default NextAuth({
         if (user && user.token) {
           return user;
         }
-        throw new Error('No autorizado');
+        throw new Error(user.message);
       }
     }),
   ],

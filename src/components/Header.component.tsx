@@ -41,6 +41,7 @@ export default function Header() {
         <div className="flex ">
           <button
             type="button"
+            id='menu'
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
             onClick={() => setMobileMenuOpen(true)}
           >
@@ -48,18 +49,6 @@ export default function Header() {
             <Bars3Icon className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
-        
-        {/* <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          {status !== 'authenticated' ? (
-            <Link href="/auth/login" className="text-sm font-semibold leading-6 text-gray-900">
-              Log in <span aria-hidden="true">&rarr;</span>
-            </Link>
-          ) : (
-            <Link href="/me" className="text-sm font-semibold leading-6 text-gray-900">
-              { session.user?.name }
-            </Link>
-          )}
-        </div> */}
       </nav>
       <Dialog as="div" className="" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
         <div className="fixed inset-0 z-10 bg-gray-700/30" />
@@ -78,6 +67,7 @@ export default function Header() {
             </Link>
             <button
               type="button"
+              id='menu'
               className="-m-2.5 rounded-md p-2.5 text-gray-700"
               onClick={() => setMobileMenuOpen(false)}
             >
@@ -105,7 +95,7 @@ export default function Header() {
                     href="/auth/login"
                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   >
-                    Log in
+                    Iniciar Sesión
                   </Link>
                 ) : (
                   <>

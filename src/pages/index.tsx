@@ -10,6 +10,9 @@ import { registerables, Chart } from "chart.js";
 import Select from '@/components/Select.component'
 import Layout from "../app/layout"
 Chart.register(...registerables);
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+const MySwal = withReactContent(Swal)
 export interface ListItems {
   id: number,
   name: number,
@@ -55,12 +58,17 @@ export default function Home() {
   })
 
   async function fetchData() {
-    setLoading(true)
-    const response = await fetch('/api/pokemon', { method: 'POST', body: JSON.stringify({ page, limit: limit.id })})
-    const { data, count } = await response.json()
-    setPokemonList(data)
-    setCount(count)
-    setLoading(false)
+    MySwal.fire({
+      title: <p>Cargando...</p>,
+      didOpen: async () => {
+        MySwal.showLoading()
+        const response = await fetch('/api/pokemon', { method: 'POST', body: JSON.stringify({ page, limit: limit.id })})
+        const { data, count } = await response.json()
+        setPokemonList(data)
+        setCount(count)
+        MySwal.close()
+      },
+    })
   }
 
   useEffect(() => {
@@ -70,22 +78,19 @@ export default function Home() {
 
   return (
     <Layout>
-      <div className={`fixed top-0 left-0 right-0 bottom-0 w-full h-screen z-50 overflow-hidden bg-gray-700 opacity-75 ${loading ? 'flex' : 'hidden'} flex-col items-center justify-center`}>
-        <div className="animate-spin loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-24 w-24 mb-4"></div>
-      </div>
       <Modal modal={modal} setModal={setModal} />
       <Header />
       <div className="bg-gray-100 min-h-screen">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl py-16 sm:py-24 lg:max-w-none lg:py-32 flex justify-center flex-col">
             <div className='flex justify-between items-center'>
-              <h2 className={`text-2xl font-bold text-gray-900`}>Pokédex</h2>
+              <h1 className={`text-2xl font-bold text-gray-900`}>Pokédex</h1>
               <Select selected={limit} setSelected={setLimit} items={list} />
             </div>
             {pokemonList.length ? (
-              <div className="my-6 md:grid md:grid-cols-2 md:gap-x-6 md:gap-y-6 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:gap-y-6">
+              <div id='pokemon-list' className="my-6 md:grid md:grid-cols-2 md:gap-x-6 md:gap-y-6 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:gap-y-6">
                 {pokemonList.map((pokemon: Pokemon) => (
-                  <Card key={pokemon.id} pokemon={pokemon} setModal={setModal} />
+                  <Card data-test-id="pokemon-card" key={pokemon.id} pokemon={pokemon} setModal={setModal} />
                 ))}
               </div>
             ) : !loading ? (

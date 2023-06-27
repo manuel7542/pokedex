@@ -38,10 +38,10 @@ const loginUser = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     const { email = '', password = '' } = req.body;
     const user = exampleData.find(({ email: userEmail }) => (userEmail === email));
     if (!user) {
-      return res.status(400).json({ message: 'Correo o contraseña no válidos - EMAIL' })
+      return res.status(400).json({ message: 'Email o contraseña no válidos' })
     }
     if (!bcrypt.compareSync(password, user.password!)) {
-      return res.status(400).json({ message: 'Correo o contraseña no válidos - Password' })
+      return res.status(400).json({ message: 'Email o contraseña no válidos' })
     }
     const { name, id, about, address, company, job, school, avatar, banner } = user;
     const token = jwt.signToken(id, email);
